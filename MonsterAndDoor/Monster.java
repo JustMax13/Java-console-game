@@ -28,6 +28,6 @@ public class Monster implements IHaveUltimate, IDoDamage{
 
     @Override
     public void useUltimate() {
-        setDamageDealt(getDamageDealt() + getDamageDealt() * 0.05f);
+        setDamageDealt(getDamageDealt() + getDamageDealt() * 0.07f);
     }
 }

@@ -34,7 +34,9 @@ public class GameLogic {
             _safetyDoor.setHitPoint(_safetyDoor.getHitPoint() - resultDamage);
 
             if(_safetyDoor.getHitPoint() > 0){
-                printPassStepResult(currentStep);
+                if(currentStep != _stepCount){
+                    printPassStepResult(currentStep);
+                }
             } else {
                 gameOver();
                 return;
@@ -42,7 +44,7 @@ public class GameLogic {
             currentStep++;
         }
 
-        System.out.println("Монстр здався, ми перемогли! Гарно рахуєш :)");
+        System.out.println("Монстр здався, ми перемогли! " + "У дверей навіть залишилось "+ _safetyDoor.getHitPoint() +" hp. " + "Гарно рахуєш :)");
     }
     private static void initializeGameParameters(){
         // Загальне
@@ -50,11 +52,11 @@ public class GameLogic {
         _random = new Random();
 
         // Параметри складності та протяжності рівня
-        /*Скільки буде хвиль*/_stepCount = 10;
+        /*Скільки буде хвиль*/_stepCount = 5;
         /*Скільки буде в хвилі прикладів*/_numberOfMathExamplesPerStep = 5;
         /*Орієнтовний час на проходження хвилі. Чим менше - тим складніше*/_averageTimeToCompleteAStep = 15000; // в мілісекундах
 
-        /*Налаштування самих персонажів*/createCharacters(7,20, 100, 20);
+        /*Налаштування самих персонажів*/createCharacters(7,20, 50, 20);
     }
     private static void createCharacters(float monsterDamage, float monsterUltimateChance,
                                          float doorHitPoint, float doorUltimateChance){
@@ -93,6 +95,7 @@ public class GameLogic {
                     result = firstNumber + secondNumber;
                     System.out.print(firstNumber + " + " + secondNumber + " = ");
 
+                    _scanner = new Scanner(System.in); // чистимо сканер
                     hasInt = _scanner.hasNextInt();
                     break;
                 }
@@ -100,6 +103,7 @@ public class GameLogic {
                     result = firstNumber - secondNumber;
                     System.out.print(firstNumber + " - " + secondNumber + " = ");
 
+                    _scanner = new Scanner(System.in); // чистимо сканер
                     hasInt = _scanner.hasNextInt();
                     break;
                 }
@@ -153,7 +157,7 @@ public class GameLogic {
             }
         }
         System.out.println("Пройдено хвиль: " + currentStep + "/" + _stepCount);
-        _scanner.nextLine();
+        _scanner = new Scanner(System.in); // чистимо сканер
         Thread.sleep(1000);
         System.out.println("Залишок hit point захисних дверей: " + _safetyDoor.getHitPoint());
         System.out.println("Продовжимо? Натискай Enter!");
